@@ -19,6 +19,7 @@ public class User {
     @Column(name= "full_name")
     private String fullName;
 
+
     public User() {
     }
 
