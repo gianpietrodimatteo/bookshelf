@@ -9,19 +9,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("users")
 public class UserController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/list")
+    @GetMapping
     public List<UserModel> listUsers() {
         return userService.listUsers().stream().map(UserModel::new).collect(Collectors.toList());
     }
 
-    @GetMapping
-    public UserModel findUserById(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public UserModel findUserById(@PathVariable Long id) {
         return new UserModel(userService.findUserById(id));
     }
 
@@ -30,13 +30,13 @@ public class UserController {
         return new UserModel(userService.createUser(userModel));
     }
 
-    @PutMapping
-    public UserModel updateUser(@RequestParam Long id, @RequestBody UserModel userModel) {
+    @PutMapping("/{id}")
+    public UserModel updateUser(@PathVariable Long id, @RequestBody UserModel userModel) {
         return new UserModel(userService.updateUser(id, userModel));
     }
 
-    @DeleteMapping
-    public void deleteUserById(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
 

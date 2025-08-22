@@ -9,19 +9,19 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/book")
+@RequestMapping("books")
 public class BookController {
 
     @Autowired
     private BookService bookService;
 
-    @GetMapping("/list")
+    @GetMapping()
     public List<BookModel> listBooks() {
         return bookService.listBooks().stream().map(BookModel::new).collect(Collectors.toList());
     }
 
-    @GetMapping
-    public BookModel findBookById(@RequestParam Long id) {
+    @GetMapping("/{id}")
+    public BookModel findBookById(@PathVariable Long id) {
         return new BookModel(bookService.findBookById(id));
     }
 
@@ -30,13 +30,13 @@ public class BookController {
         return new BookModel(bookService.createBook(bookModel));
     }
 
-    @PutMapping
-    public BookModel updateBook(@RequestParam Long id, @RequestBody BookModel bookModel) {
+    @PutMapping("/{id}")
+    public BookModel updateBook(@PathVariable Long id, @RequestBody BookModel bookModel) {
         return new BookModel(bookService.updateBook(id, bookModel));
     }
 
-    @DeleteMapping
-    public void deleteBookById(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteBookById(@PathVariable Long id) {
         bookService.deleteBookById(id);
     }
 }
