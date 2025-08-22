@@ -16,3 +16,7 @@ Open backend on Intellij as a maven project, install it.
 
 Run `spring-boot:run`.
 
+Swagger UI page avaliable at: `http://localhost:8080/swagger-ui.html`
+
+OpenAPI description avaliable at `http://localhost:8080/v3/api-docs`.
+
