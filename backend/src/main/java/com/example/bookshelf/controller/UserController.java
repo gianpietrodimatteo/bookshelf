@@ -3,6 +3,7 @@ package com.example.bookshelf.controller;
 import com.example.bookshelf.model.UserModel;
 import com.example.bookshelf.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public UserModel createUser(@RequestBody UserModel userModel) {
         return new UserModel(userService.createUser(userModel));
     }
@@ -36,6 +38,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserById(@PathVariable Long id) {
         userService.deleteUserById(id);
     }
