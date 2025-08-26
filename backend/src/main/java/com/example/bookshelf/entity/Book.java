@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * The Book entity, as it is in the database
+ */
 @Entity
 @Table(name = "books")
 public class Book {

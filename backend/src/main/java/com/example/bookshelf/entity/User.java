@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 
+/**
+ * The User entity, as it is in the database
+ */
 @Entity
 @Table(name="users")
 public class User {

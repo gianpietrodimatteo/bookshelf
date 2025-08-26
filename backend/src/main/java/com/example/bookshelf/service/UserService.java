@@ -10,25 +10,57 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
+/**
+ * Service for managing users
+ *
+ * @see User
+ * @see UserRepository
+ */
 @Service
 public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Lists all users
+     *
+     * @return a list with all users
+     */
     public List<User> listUsers() {
         return userRepository.findAll();
     }
 
+    /**
+     * Finds a user by its id
+     *
+     * @param id the user's id
+     * @return the user entity
+     * @throws ResponseStatusException with http status 404 if not found
+     */
     public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
     }
 
+    /**
+     * Creates a new user
+     *
+     * @param userModel the user's model, the id is irrelevant
+     * @return the new created user entity
+     */
     public User createUser(UserModel userModel) {
         return userRepository.save(modelToUser(userModel));
     }
 
+    /**
+     * Updates (overwrites) an existing user
+     *
+     * @param id        the id of the user to be updated
+     * @param userModel the entire new user model, minus the id
+     * @return the new updated user entity
+     * @throws ResponseStatusException with http status 404 if not found
+     */
     public User updateUser(Long id, UserModel userModel) {
         User user = findUserById(id);
         user.setUsername(userModel.getUsername());
@@ -36,11 +68,23 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    /**
+     * Permanently deletes a user
+     *
+     * @param id the id of the user to be deleted
+     * @throws ResponseStatusException with http status 404 if not found
+     */
     public void deleteUserById(Long id) {
         User user = findUserById(id);
         userRepository.delete(user);
     }
 
+    /**
+     * Converts a user model (json representation) to a user entity (entity representation)
+     *
+     * @param userModel the user model to be converted
+     * @return the equivalent user entity
+     */
     public User modelToUser(UserModel userModel) {
         User user = new User();
         user.setUsername(userModel.getUsername());

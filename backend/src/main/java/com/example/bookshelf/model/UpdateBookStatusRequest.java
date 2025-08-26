@@ -4,6 +4,12 @@ import jakarta.validation.constraints.NotBlank;
 
 import java.util.Objects;
 
+/**
+ * The JSON with the request for updating the UserBook's status
+ * The string must be a valid representation of the BookStatus enum
+ *
+ * @see com.example.bookshelf.enums.BookStatus
+ */
 public class UpdateBookStatusRequest {
 
     @NotBlank

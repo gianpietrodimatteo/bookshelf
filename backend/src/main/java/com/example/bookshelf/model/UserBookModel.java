@@ -1,13 +1,12 @@
 package com.example.bookshelf.model;
 
-import com.example.bookshelf.entity.Book;
-import com.example.bookshelf.entity.User;
 import com.example.bookshelf.entity.UserBook;
-import com.example.bookshelf.enums.BookStatus;
-import jakarta.persistence.*;
 
 import java.util.Objects;
 
+/**
+ * The UserBook model (user and book association), as it is in the JSON
+ */
 public class UserBookModel {
 
     private Long id;

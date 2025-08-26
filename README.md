@@ -20,3 +20,9 @@ Swagger UI page avaliable at: `http://localhost:8080/swagger-ui.html`
 
 OpenAPI description avaliable at `http://localhost:8080/v3/api-docs`.
 
+---
+
+Build report and javadoc: `mvn site`
+
+Site available at: `target/site/index.html`
+

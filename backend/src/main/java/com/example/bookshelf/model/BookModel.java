@@ -4,6 +4,9 @@ import com.example.bookshelf.entity.Book;
 
 import java.util.Objects;
 
+/**
+ * The Book model, as it is in the JSON
+ */
 public class BookModel {
 
     private Long id;
