@@ -2,6 +2,7 @@ package com.example.bookshelf.controller;
 
 import com.example.bookshelf.model.UserModel;
 import com.example.bookshelf.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -52,7 +53,7 @@ public class UserController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public UserModel createUser(@RequestBody UserModel userModel) {
+    public UserModel createUser(@Valid @RequestBody UserModel userModel) {
         return new UserModel(userService.createUser(userModel));
     }
 
@@ -65,7 +66,7 @@ public class UserController {
      * @throws org.springframework.web.server.ResponseStatusException with http status 404 if not found
      */
     @PutMapping("/{id}")
-    public UserModel updateUser(@PathVariable Long id, @RequestBody UserModel userModel) {
+    public UserModel updateUser(@PathVariable Long id, @Valid @RequestBody UserModel userModel) {
         return new UserModel(userService.updateUser(id, userModel));
     }
 

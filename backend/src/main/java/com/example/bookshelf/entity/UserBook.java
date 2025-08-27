@@ -9,7 +9,7 @@ import java.util.Objects;
  * The UserBook entity, as it is in the database
  */
 @Entity
-@Table(name = "user_book")
+@Table(name = "user_book", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "book_id"})})
 public class UserBook {
 
     @Id
@@ -25,6 +25,7 @@ public class UserBook {
     private Book book;
 
     @Enumerated(EnumType.STRING)
+    @Column(length = 50)
     private BookStatus status;
 
 

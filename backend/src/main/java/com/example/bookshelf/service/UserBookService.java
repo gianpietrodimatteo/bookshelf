@@ -46,6 +46,7 @@ public class UserBookService {
 
     /**
      * Creates a user-book (links a user to a book)
+     *
      * @param userId the user's id
      * @param bookId the book's id
      * @return the created user-book association entity
@@ -69,6 +70,7 @@ public class UserBookService {
 
     /**
      * Finds a user-book by id
+     *
      * @param userBookId the user-book id
      * @return the user-book entity
      * @throws ResponseStatusException with http status 404 if not found
@@ -80,7 +82,8 @@ public class UserBookService {
 
     /**
      * Updates the status of an existing user-book association
-     * @param userBookId the user-book's association id
+     *
+     * @param userBookId    the user-book's association id
      * @param statusRequest the status change request
      * @throws ResponseStatusException with http status 404 if not found
      */
@@ -95,6 +98,7 @@ public class UserBookService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid User's Book status!");
         }
     }
+
     /**
      * Permanently deletes a user-book (unlinks a user to a book)
      *

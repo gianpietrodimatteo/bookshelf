@@ -3,6 +3,7 @@ package com.example.bookshelf.controller;
 import com.example.bookshelf.model.UpdateBookStatusRequest;
 import com.example.bookshelf.model.UserBookModel;
 import com.example.bookshelf.service.UserBookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -61,7 +62,7 @@ public class UserBookController {
      */
     @PatchMapping("/{userBookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUserBookStatus(@PathVariable Long userBookId, @RequestBody UpdateBookStatusRequest statusRequest) {
+    public void updateUserBookStatus(@PathVariable Long userBookId, @Valid @RequestBody UpdateBookStatusRequest statusRequest) {
         userBookService.updateUserBookStatus(userBookId, statusRequest);
     }
 

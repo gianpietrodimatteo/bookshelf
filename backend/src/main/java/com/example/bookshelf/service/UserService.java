@@ -88,6 +88,7 @@ public class UserService {
     public User modelToUser(UserModel userModel) {
         User user = new User();
         user.setUsername(userModel.getUsername());
+        user.setEmail(userModel.getEmail());
         user.setFullName(userModel.getFullName());
         return user;
     }

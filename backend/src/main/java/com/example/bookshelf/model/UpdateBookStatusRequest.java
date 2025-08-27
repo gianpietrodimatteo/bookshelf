@@ -1,6 +1,7 @@
 package com.example.bookshelf.model;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -13,6 +14,7 @@ import java.util.Objects;
 public class UpdateBookStatusRequest {
 
     @NotBlank
+    @Size(max = 50)
     private String status;
 
 

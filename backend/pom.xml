@@ -73,6 +73,8 @@
                     <version>3.11.3</version>
                     <configuration>
                         <release>${java.version}</release>
+                        <!-- Suppress missing javadoc warnings -->
+                        <doclint>all,-missing</doclint>
                     </configuration>
                 </plugin>
             </plugins>

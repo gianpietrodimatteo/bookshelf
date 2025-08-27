@@ -2,6 +2,7 @@ package com.example.bookshelf.controller;
 
 import com.example.bookshelf.model.BookModel;
 import com.example.bookshelf.service.BookService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -53,7 +54,7 @@ public class BookController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookModel createBook(@RequestBody BookModel bookModel) {
+    public BookModel createBook(@Valid @RequestBody BookModel bookModel) {
         return new BookModel(bookService.createBook(bookModel));
     }
 
@@ -66,7 +67,7 @@ public class BookController {
      * @throws org.springframework.web.server.ResponseStatusException with http status 404 if not found
      */
     @PutMapping("/{id}")
-    public BookModel updateBook(@PathVariable Long id, @RequestBody BookModel bookModel) {
+    public BookModel updateBook(@PathVariable Long id, @Valid @RequestBody BookModel bookModel) {
         return new BookModel(bookService.updateBook(id, bookModel));
     }
 

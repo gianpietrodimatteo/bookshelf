@@ -1,6 +1,10 @@
 package com.example.bookshelf.model;
 
 import com.example.bookshelf.entity.UserBook;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.Objects;
 
@@ -9,10 +13,14 @@ import java.util.Objects;
  */
 public class UserBookModel {
 
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
+    @NotNull
     private BookModel book;
 
+    @Size(max = 50)
+    @NotBlank
     private String status;
 
 
