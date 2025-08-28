@@ -4,6 +4,8 @@ import com.example.bookshelf.model.UpdateBookStatusRequest;
 import com.example.bookshelf.model.UserBookModel;
 import com.example.bookshelf.service.UserBookService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -22,6 +24,8 @@ import java.util.stream.Collectors;
 @RequestMapping("user-books")
 public class UserBookController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserBookController.class);
+
     @Autowired
     private UserBookService userBookService;
 
@@ -35,6 +39,7 @@ public class UserBookController {
      */
     @GetMapping
     public List<UserBookModel> listByUserId(@RequestParam Long userId) {
+        logger.debug("Request to list user's books for user of id {}", userId);
         return userBookService.listByUserId(userId).stream().map(UserBookModel::new).collect(Collectors.toList());
     }
 
@@ -50,6 +55,7 @@ public class UserBookController {
     @PostMapping("/user/{userId}/book/{bookId}")
     @ResponseStatus(HttpStatus.CREATED)
     public UserBookModel createByUserIdAndBookId(@PathVariable Long userId, @PathVariable Long bookId) {
+        logger.debug("Request to link user of id {} with book of id {}", userId, bookId);
         return new UserBookModel(userBookService.createByUserIdAndBookId(userId, bookId));
     }
 
@@ -63,6 +69,8 @@ public class UserBookController {
     @PatchMapping("/{userBookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateUserBookStatus(@PathVariable Long userBookId, @Valid @RequestBody UpdateBookStatusRequest statusRequest) {
+        logger.debug("Request to update status for user-book of id {}", userBookId);
+        logger.trace("Received new status request: {}", statusRequest);
         userBookService.updateUserBookStatus(userBookId, statusRequest);
     }
 
@@ -75,6 +83,7 @@ public class UserBookController {
     @DeleteMapping("/{userBookId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserBookById(@PathVariable Long userBookId) {
+        logger.debug("Request to delete user-book of id {}", userBookId);
         userBookService.deleteUserBook(userBookId);
     }
 }

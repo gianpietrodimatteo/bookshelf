@@ -3,6 +3,8 @@ package com.example.bookshelf.controller;
 import com.example.bookshelf.model.UserModel;
 import com.example.bookshelf.service.UserService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 @RequestMapping("users")
 public class UserController {
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+
     @Autowired
     private UserService userService;
 
@@ -30,6 +34,7 @@ public class UserController {
      */
     @GetMapping
     public List<UserModel> listUsers() {
+        logger.debug("Request to list all users");
         return userService.listUsers().stream().map(UserModel::new).collect(Collectors.toList());
     }
 
@@ -42,6 +47,7 @@ public class UserController {
      */
     @GetMapping("/{id}")
     public UserModel findUserById(@PathVariable Long id) {
+        logger.debug("Request to find user by id {}", id);
         return new UserModel(userService.findUserById(id));
     }
 
@@ -54,6 +60,8 @@ public class UserController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public UserModel createUser(@Valid @RequestBody UserModel userModel) {
+        logger.debug("Request to create new user.");
+        logger.trace("Received new user to be created: {}", userModel);
         return new UserModel(userService.createUser(userModel));
     }
 
@@ -67,6 +75,8 @@ public class UserController {
      */
     @PutMapping("/{id}")
     public UserModel updateUser(@PathVariable Long id, @Valid @RequestBody UserModel userModel) {
+        logger.debug("Request to update user of id {}", id);
+        logger.trace("Received new user to overwrite existing one: {}", userModel);
         return new UserModel(userService.updateUser(id, userModel));
     }
 
@@ -79,6 +89,7 @@ public class UserController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUserById(@PathVariable Long id) {
+        logger.debug("Request to delete user by id {}", id);
         userService.deleteUserById(id);
     }
 

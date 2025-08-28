@@ -3,6 +3,8 @@ package com.example.bookshelf.controller;
 import com.example.bookshelf.model.BookModel;
 import com.example.bookshelf.service.BookService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -20,6 +22,8 @@ import java.util.stream.Collectors;
 @RequestMapping("books")
 public class BookController {
 
+    private static final Logger logger = LoggerFactory.getLogger(BookController.class);
+
     @Autowired
     private BookService bookService;
 
@@ -31,6 +35,7 @@ public class BookController {
      */
     @GetMapping()
     public List<BookModel> listBooks() {
+        logger.debug("Request to list all books");
         return bookService.listBooks().stream().map(BookModel::new).collect(Collectors.toList());
     }
 
@@ -43,6 +48,7 @@ public class BookController {
      */
     @GetMapping("/{id}")
     public BookModel findBookById(@PathVariable Long id) {
+        logger.debug("Request to find book by id {}", id);
         return new BookModel(bookService.findBookById(id));
     }
 
@@ -55,6 +61,8 @@ public class BookController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookModel createBook(@Valid @RequestBody BookModel bookModel) {
+        logger.debug("Request to create new book.");
+        logger.trace("Received new book to be created: {}", bookModel);
         return new BookModel(bookService.createBook(bookModel));
     }
 
@@ -68,6 +76,8 @@ public class BookController {
      */
     @PutMapping("/{id}")
     public BookModel updateBook(@PathVariable Long id, @Valid @RequestBody BookModel bookModel) {
+        logger.debug("Request to update book of id {}", id);
+        logger.trace("Received new book to overwrite existing one: {}", bookModel);
         return new BookModel(bookService.updateBook(id, bookModel));
     }
 
@@ -80,6 +90,7 @@ public class BookController {
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteBookById(@PathVariable Long id) {
+        logger.debug("Request to delete book by id {}", id);
         bookService.deleteBookById(id);
     }
 }
