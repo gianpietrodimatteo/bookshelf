@@ -1,6 +1,7 @@
 package com.example.bookshelf.service;
 
 import com.example.bookshelf.entity.Book;
+import com.example.bookshelf.exceptions.EntityNotFound;
 import com.example.bookshelf.model.BookModel;
 import com.example.bookshelf.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,11 +38,11 @@ public class BookService {
      *
      * @param id the book's id
      * @return the book entity
-     * @throws ResponseStatusException with http status 404 if not found
+     * @throws EntityNotFound when book is not found
      */
     public Book findBookById(Long id) {
         return bookRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "Book not found!"));
+                new EntityNotFound("Book", id));
     }
 
     /**
@@ -60,7 +61,7 @@ public class BookService {
      * @param id        the id of the book to be updated
      * @param bookModel the entire new book model, minus the id
      * @return the new updated book entity
-     * @throws ResponseStatusException with http status 404 if not found
+     * @throws EntityNotFound when book is not found
      */
     public Book updateBook(Long id, BookModel bookModel) {
         Book book = findBookById(id);
@@ -76,7 +77,7 @@ public class BookService {
      * Permanently deletes a book
      *
      * @param id the id of the book to be deleted
-     * @throws ResponseStatusException with http status 404 if not found
+     * @throws EntityNotFound when book is not found
      */
     public void deleteBookById(Long id) {
         Book book = findBookById(id);

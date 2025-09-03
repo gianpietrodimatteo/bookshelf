@@ -1,6 +1,7 @@
 package com.example.bookshelf.service;
 
 import com.example.bookshelf.entity.User;
+import com.example.bookshelf.exceptions.EntityNotFound;
 import com.example.bookshelf.model.UserModel;
 import com.example.bookshelf.repository.UserRepository;
 import org.slf4j.Logger;
@@ -40,11 +41,11 @@ public class UserService {
      *
      * @param id the user's id
      * @return the user entity
-     * @throws ResponseStatusException with http status 404 if not found
+     * @throws EntityNotFound when user is not found
      */
     public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() ->
-                new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found!"));
+                new EntityNotFound("User", id));
     }
 
     /**
@@ -63,7 +64,7 @@ public class UserService {
      * @param id        the id of the user to be updated
      * @param userModel the entire new user model, minus the id
      * @return the new updated user entity
-     * @throws ResponseStatusException with http status 404 if not found
+     * @throws EntityNotFound when user is not found
      */
     public User updateUser(Long id, UserModel userModel) {
         User user = findUserById(id);
@@ -76,7 +77,7 @@ public class UserService {
      * Permanently deletes a user
      *
      * @param id the id of the user to be deleted
-     * @throws ResponseStatusException with http status 404 if not found
+     * @throws EntityNotFound when user is not found
      */
     public void deleteUserById(Long id) {
         User user = findUserById(id);

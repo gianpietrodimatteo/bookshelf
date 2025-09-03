@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -22,6 +23,16 @@ public class BookshelfGlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(BookshelfGlobalExceptionHandler.class);
 
+
+    @ExceptionHandler(EntityNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public BookshelfApiError handleEntityNotFoundException(RuntimeException e) {
+        BookshelfApiError apiError = new BookshelfApiError();
+        apiError.setMessage(e.getMessage());
+        apiError.setTimestamp(LocalDateTime.now());
+        logger.error(apiError.toString());
+        return apiError;
+    }
 
     /**
      * Handles validation exceptions and provides API response
