@@ -1,12 +1,23 @@
 package com.example.bookshelf.exceptions.model;
 
-public class EntityError {
-    private String field;
-    private Object value;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
-    public EntityError(String field, Object value) {
+import java.util.Objects;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class EntityError {
+
+    private String field;
+
+    private String value;
+
+    private String message;
+
+
+    public EntityError(String field, String value, String message) {
         this.field = field;
         this.value = value;
+        this.message = message;
     }
 
     public EntityError() {
@@ -20,16 +31,40 @@ public class EntityError {
         this.field = field;
     }
 
-    public Object getValue() {
+    public String getValue() {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(String value) {
         this.value = value;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        EntityError that = (EntityError) o;
+        return Objects.equals(field, that.field) && Objects.equals(value, that.value) && Objects.equals(message, that.message);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(field, value, message);
     }
 
     @Override
     public String toString() {
-        return field + " = " + value;
+        return "EntityError{" +
+                "field='" + field + '\'' +
+                ", value='" + value + '\'' +
+                ", message='" + message + '\'' +
+                '}';
     }
 }

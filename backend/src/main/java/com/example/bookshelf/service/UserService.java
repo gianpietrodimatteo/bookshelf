@@ -2,6 +2,7 @@ package com.example.bookshelf.service;
 
 import com.example.bookshelf.entity.User;
 import com.example.bookshelf.exceptions.EntityNotFound;
+import com.example.bookshelf.exceptions.model.EntityError;
 import com.example.bookshelf.model.UserModel;
 import com.example.bookshelf.repository.UserRepository;
 import org.slf4j.Logger;
@@ -45,7 +46,8 @@ public class UserService {
      */
     public User findUserById(Long id) {
         return userRepository.findById(id).orElseThrow(() ->
-                new EntityNotFound("User", id));
+//                new EntityNotFound("User", id));
+        new EntityNotFound("User", new EntityError("id", id.toString(), null)));
     }
 
     /**

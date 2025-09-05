@@ -2,6 +2,7 @@ package com.example.bookshelf.service;
 
 import com.example.bookshelf.entity.Book;
 import com.example.bookshelf.exceptions.EntityNotFound;
+import com.example.bookshelf.exceptions.model.EntityError;
 import com.example.bookshelf.model.BookModel;
 import com.example.bookshelf.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,8 @@ public class BookService {
      */
     public Book findBookById(Long id) {
         return bookRepository.findById(id).orElseThrow(() ->
-                new EntityNotFound("Book", id));
+//                new EntityNotFound("Book", id));
+        new EntityNotFound("Book", new EntityError("id", id.toString(), null)));
     }
 
     /**

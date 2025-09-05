@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,9 +62,10 @@ public class UserBookService {
      */
     public UserBook createByUserIdAndBookId(Long userId, Long bookId) {
         if (userBookRepository.existsByUserIdAndBookId(userId, bookId)) {
-            Set<EntityError> conflictingFields = new HashSet<>();
-            conflictingFields.add(new EntityError("User id", userId));
-            conflictingFields.add(new EntityError("Book id", bookId));
+            List<EntityError> conflictingFields = new ArrayList<>();
+            conflictingFields.add(new EntityError("User id", userId.toString(), null));
+            conflictingFields.add(new EntityError("Book id", bookId.toString(), null));
+//            throw new EntityConflict("UserBook", conflictingFields);
             throw new EntityConflict("UserBook", conflictingFields);
         }
 
@@ -85,7 +87,8 @@ public class UserBookService {
      */
     public UserBook findUserBookById(Long userBookId) {
         return userBookRepository.findById(userBookId).orElseThrow(() ->
-                new EntityNotFound("UserBook", userBookId));
+//                new EntityNotFound("UserBook", userBookId));
+        new EntityNotFound("UserBook", new EntityError("id", userBookId.toString(), null)));
     }
 
     /**
@@ -104,7 +107,8 @@ public class UserBookService {
             userBook.setStatus(status);
             userBookRepository.save(userBook);
         } catch (IllegalArgumentException e) {
-            throw new EnumNotFound("BookStatus", statusRequest.getStatus());
+//            throw new EnumNotFound("BookStatus", statusRequest.getStatus());
+            throw new EnumNotFound("BookStatus", new EntityError("name", statusRequest.getStatus(), null));
         }
     }
 

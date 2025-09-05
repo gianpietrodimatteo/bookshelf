@@ -1,94 +1,92 @@
 package com.example.bookshelf.exceptions.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import org.springframework.http.HttpStatus;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
-/**
- * The default JSON response and log entry for when a known exception occurs, with a timestamp and details on what happened
- */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookshelfApiError {
 
-    /**
-     * The time the exception was caught
-     */
-    private LocalDateTime timestamp;
+    private String status;
 
-    /**
-     * The HTTP status code
-     */
-    private HttpStatus status;
+    private String title;
 
-    /**
-     * The error message associated with the exception
-     */
-    private String message;
+    private String source;
 
-    /**
-     * List of constructed error messages
-     */
-    private List<String> errors;
+    private String detail;
 
+    private List<EntityError> errors;
 
-    public BookshelfApiError(HttpStatus status, String message, String error) {
-        super();
-        this.timestamp = LocalDateTime.now();
+    public BookshelfApiError(String status, String title, String source, String detail, EntityError error) {
         this.status = status;
-        this.message = message;
+        this.title = title;
+        this.source = source;
+        this.detail = detail;
         this.errors = Collections.singletonList(error);
     }
 
-    public BookshelfApiError(HttpStatus status, String message, List<String> errors) {
-        super();
-        this.timestamp = LocalDateTime.now();
+    public BookshelfApiError(String status, String title, String source, String detail, List<EntityError> errors) {
         this.status = status;
-        this.message = message;
+        this.title = title;
+        this.source = source;
+        this.detail = detail;
         this.errors = errors;
     }
 
     public BookshelfApiError() {
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(LocalDateTime timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public HttpStatus getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(HttpStatus status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
-    public String getMessage() {
-        return message;
+    public String getTitle() {
+        return title;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public List<String> getErrors() {
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
+    }
+
+    public String getDetail() {
+        return detail;
+    }
+
+    public void setDetail(String detail) {
+        this.detail = detail;
+    }
+
+    public List<EntityError> getErrors() {
         return errors;
     }
 
-    public void setErrors(List<String> errors) {
+    public void setErrors(List<EntityError> errors) {
         this.errors = errors;
     }
 
     @Override
     public String toString() {
         return "BookshelfApiError{" +
-                "timestamp=" + timestamp +
-                ", status=" + status +
-                ", message='" + message + '\'' +
+                "status='" + status + '\'' +
+                ", title='" + title + '\'' +
+                ", source='" + source + '\'' +
+                ", detail='" + detail + '\'' +
                 ", errors=" + errors +
                 '}';
     }
